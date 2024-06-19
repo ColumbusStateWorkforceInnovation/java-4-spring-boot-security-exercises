@@ -76,7 +76,7 @@ class UserProfileAddressesControllerTest {
     @DisplayName("It returns a 404 when the user is not found")
     public void itReturnsA404WhenTheUserIsNotFound() throws Exception {
         CreateUserAddressRequest createUserAddressRequest =
-                new CreateUserAddressRequest(1, "123 Main St", "Columbus", "OH", "43215");
+                new CreateUserAddressRequest(999, "123 Main St", "Columbus", "OH", "43215");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")

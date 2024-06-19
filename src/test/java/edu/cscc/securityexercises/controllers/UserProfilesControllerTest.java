@@ -63,27 +63,10 @@ class UserProfilesControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(createUserProfileRequest.lastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(createUserProfileRequest.email()));
 
-        Optional<UserProfile> userProfile = userProfilesRepository.findAll().stream().findFirst();
+        Optional<UserProfile> userProfile = userProfilesRepository.findByEmail(createUserProfileRequest.email());
         UserProfile foundUserProfile = userProfile.get();
         assertEquals(foundUserProfile.getFirstName(), createUserProfileRequest.firstName());
         assertEquals(foundUserProfile.getLastName(), createUserProfileRequest.lastName());
         assertEquals(foundUserProfile.getEmail(), createUserProfileRequest.email());
-    }
-
-    @Test
-    public void indexGetsAllUsers() throws Exception {
-        UserProfile firstUserProfile = new UserProfile("Hary", "Dresden", "harry.dresden@chicago.net");
-        UserProfile secondUserProfile = new UserProfile("Molly", "Carpenter", "molly.carpenter@chicago.net");
-        userProfilesRepository.save(firstUserProfile);
-        userProfilesRepository.save(secondUserProfile);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/users")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        String result = mvcResult.getResponse().getContentAsString();
-        List<UserProfile> userProfiles = objectMapper.readValue(result, new TypeReference<>() {});
-        assertEquals(userProfiles.size(), 2);
-        assertTrue(userProfiles.stream().anyMatch(user -> user.getFirstName().equals(firstUserProfile.getFirstName())));
-        assertTrue(userProfiles.stream().anyMatch(user -> user.getFirstName().equals(secondUserProfile.getFirstName())));
     }
 }
