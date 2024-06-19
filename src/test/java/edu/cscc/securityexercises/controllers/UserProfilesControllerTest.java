@@ -1,6 +1,5 @@
 package edu.cscc.securityexercises.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cscc.securityexercises.controllers.requests.CreateUserProfileRequest;
 import edu.cscc.securityexercises.controllers.requests.UserAddressData;
@@ -17,7 +16,6 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -25,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -59,7 +56,11 @@ class UserProfilesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(createUserProfileRequest))
-                .with(SecurityMockMvcRequestPostProcessors.jwt()))
+                        .with(SecurityMockMvcRequestPostProcessors.jwt().jwt((jwt) -> {
+                            jwt.claims(claims -> {
+                                claims.put("scope", "profiles:create");
+                            });
+                        })))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(createUserProfileRequest.firstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(createUserProfileRequest.lastName()))

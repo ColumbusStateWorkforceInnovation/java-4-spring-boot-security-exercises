@@ -6,9 +6,13 @@ import edu.cscc.securityexercises.models.UserProfile;
 import edu.cscc.securityexercises.models.UserAddress;
 import edu.cscc.securityexercises.repositories.UserAddressesRepository;
 import edu.cscc.securityexercises.repositories.UserProfilesRepository;
+import edu.cscc.securityexercises.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -23,8 +27,15 @@ public class UserAddressesController {
     @Autowired
     private UserProfilesRepository userProfilesRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping()
-    public ResponseEntity<?> create(@Valid @RequestBody CreateUserAddressRequest createUserAddressRequest) {
+    @PreAuthorize("@tokenService.hasScopes(#jwt, 'user_addresses:create profiles:read')")
+    public ResponseEntity<?> create(
+            @Valid @RequestBody CreateUserAddressRequest createUserAddressRequest,
+            @AuthenticationPrincipal Jwt jwt
+    ) {
         Optional<UserProfile> user = userProfilesRepository.findById(createUserAddressRequest.userId());
         if (user.isEmpty()) {
             throw new ResourceNotFoundException("User not found");

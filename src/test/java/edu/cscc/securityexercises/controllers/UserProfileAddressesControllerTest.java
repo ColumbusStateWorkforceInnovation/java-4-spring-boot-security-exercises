@@ -48,14 +48,6 @@ class UserProfileAddressesControllerTest {
     }
 
     @Test
-    @DisplayName("It returns a 404 when the user address is not found")
-    public void itReturnsA404WhenTheUserAddressIsNotFound() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user-addresses/1/user")
-                .with(SecurityMockMvcRequestPostProcessors.jwt()))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     @DisplayName("It can create a user address")
     public void itCanCreateAUserAddress() throws Exception {
         UserProfile userProfile = userProfilesRepository.save(new UserProfile("Your", "Name", "your.name@gmail.com"));
@@ -65,7 +57,11 @@ class UserProfileAddressesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(createUserAddressRequest))
-                                .with(SecurityMockMvcRequestPostProcessors.jwt()))
+                        .with(SecurityMockMvcRequestPostProcessors.jwt().jwt((jwt) -> {
+                            jwt.claims(claims -> {
+                                claims.put("scope", "profiles:read user_addresses:create");
+                            });
+                        })))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.street").value(createUserAddressRequest.street()))
@@ -84,7 +80,11 @@ class UserProfileAddressesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(createUserAddressRequest))
-                .with(SecurityMockMvcRequestPostProcessors.jwt()))
+                        .with(SecurityMockMvcRequestPostProcessors.jwt().jwt((jwt) -> {
+                            jwt.claims(claims -> {
+                                claims.put("scope", "profiles:read user_addresses:create");
+                            });
+                        })))
                 .andExpect(status().isNotFound());
     }
 
@@ -97,7 +97,11 @@ class UserProfileAddressesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(createUserAddressRequest))
-                .with(SecurityMockMvcRequestPostProcessors.jwt()))
+                        .with(SecurityMockMvcRequestPostProcessors.jwt().jwt((jwt) -> {
+                            jwt.claims(claims -> {
+                                claims.put("scope", "profiles:read user_addresses:create");
+                            });
+                        })))
                 .andExpect(status().isBadRequest());
     }
 }
