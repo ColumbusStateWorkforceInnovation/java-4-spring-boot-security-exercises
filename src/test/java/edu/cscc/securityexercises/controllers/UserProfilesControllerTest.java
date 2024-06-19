@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -57,7 +58,8 @@ class UserProfilesControllerTest {
         CreateUserProfileRequest createUserProfileRequest = new CreateUserProfileRequest("Jim", "Kirkbride", "jkirkbride@cscc.edu", userAddresses);
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(createUserProfileRequest)))
+                        .content(objectMapper.writeValueAsString(createUserProfileRequest))
+                .with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(createUserProfileRequest.firstName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(createUserProfileRequest.lastName()))

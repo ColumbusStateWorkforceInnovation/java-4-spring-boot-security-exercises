@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,7 +50,8 @@ class UserProfileAddressesControllerTest {
     @Test
     @DisplayName("It returns a 404 when the user address is not found")
     public void itReturnsA404WhenTheUserAddressIsNotFound() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user-addresses/1/user"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/user-addresses/1/user")
+                .with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(status().isNotFound());
     }
 
@@ -62,7 +64,8 @@ class UserProfileAddressesControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(createUserAddressRequest)))
+                .content(objectMapper.writeValueAsString(createUserAddressRequest))
+                                .with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.street").value(createUserAddressRequest.street()))
@@ -80,7 +83,8 @@ class UserProfileAddressesControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(createUserAddressRequest)))
+                .content(objectMapper.writeValueAsString(createUserAddressRequest))
+                .with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(status().isNotFound());
     }
 
@@ -92,7 +96,8 @@ class UserProfileAddressesControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(createUserAddressRequest)))
+                .content(objectMapper.writeValueAsString(createUserAddressRequest))
+                .with(SecurityMockMvcRequestPostProcessors.jwt()))
                 .andExpect(status().isBadRequest());
     }
 }
