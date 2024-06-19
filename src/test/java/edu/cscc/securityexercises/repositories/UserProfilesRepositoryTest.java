@@ -1,6 +1,6 @@
-package edu.cscc.jpaexercise.jpaexercise.repositories;
+package edu.cscc.securityexercises.repositories;
 
-import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
+import edu.cscc.securityexercises.models.UserProfile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

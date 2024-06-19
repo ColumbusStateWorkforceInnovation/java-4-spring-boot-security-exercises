@@ -1,7 +1,7 @@
-package edu.cscc.jpaexercise.jpaexercise.repositories;
+package edu.cscc.securityexercises.repositories;
 
-import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
-import edu.cscc.jpaexercise.jpaexercise.models.UserAddress;
+import edu.cscc.securityexercises.models.UserProfile;
+import edu.cscc.securityexercises.models.UserAddress;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 

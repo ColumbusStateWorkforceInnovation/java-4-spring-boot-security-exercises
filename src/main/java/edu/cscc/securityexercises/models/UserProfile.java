@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise.models;
+package edu.cscc.securityexercises.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

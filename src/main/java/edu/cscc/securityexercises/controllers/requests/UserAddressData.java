@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise.controllers.requests;
+package edu.cscc.securityexercises.controllers.requests;
 
 public record UserAddressData(
         String street,

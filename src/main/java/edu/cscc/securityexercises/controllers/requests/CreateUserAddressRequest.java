@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise.controllers.requests;
+package edu.cscc.securityexercises.controllers.requests;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

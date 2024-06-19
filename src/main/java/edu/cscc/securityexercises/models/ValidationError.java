@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise.models;
+package edu.cscc.securityexercises.models;
 
 public record ValidationError(String code, String message) {
 }

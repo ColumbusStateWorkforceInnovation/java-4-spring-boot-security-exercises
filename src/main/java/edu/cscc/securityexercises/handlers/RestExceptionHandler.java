@@ -1,7 +1,7 @@
-package edu.cscc.jpaexercise.jpaexercise.handlers;
+package edu.cscc.securityexercises.handlers;
 
-import edu.cscc.jpaexercise.jpaexercise.models.ErrorDetail;
-import edu.cscc.jpaexercise.jpaexercise.models.ValidationError;
+import edu.cscc.securityexercises.models.ErrorDetail;
+import edu.cscc.securityexercises.models.ValidationError;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;

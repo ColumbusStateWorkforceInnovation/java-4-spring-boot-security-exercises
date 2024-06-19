@@ -1,10 +1,10 @@
-package edu.cscc.jpaexercise.jpaexercise.controllers;
+package edu.cscc.securityexercises.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.cscc.jpaexercise.jpaexercise.controllers.requests.CreateUserAddressRequest;
-import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
-import edu.cscc.jpaexercise.jpaexercise.repositories.UserAddressesRepository;
-import edu.cscc.jpaexercise.jpaexercise.repositories.UserProfilesRepository;
+import edu.cscc.securityexercises.controllers.requests.CreateUserAddressRequest;
+import edu.cscc.securityexercises.models.UserProfile;
+import edu.cscc.securityexercises.repositories.UserAddressesRepository;
+import edu.cscc.securityexercises.repositories.UserProfilesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

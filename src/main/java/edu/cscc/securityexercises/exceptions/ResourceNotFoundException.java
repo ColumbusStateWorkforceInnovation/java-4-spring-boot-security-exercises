@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise.exceptions;
+package edu.cscc.securityexercises.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,10 +1,10 @@
-package edu.cscc.jpaexercise.jpaexercise.controllers;
+package edu.cscc.securityexercises.controllers;
 
-import edu.cscc.jpaexercise.jpaexercise.controllers.requests.CreateUserProfileRequest;
-import edu.cscc.jpaexercise.jpaexercise.models.UserAddress;
-import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
-import edu.cscc.jpaexercise.jpaexercise.repositories.UserAddressesRepository;
-import edu.cscc.jpaexercise.jpaexercise.repositories.UserProfilesRepository;
+import edu.cscc.securityexercises.controllers.requests.CreateUserProfileRequest;
+import edu.cscc.securityexercises.models.UserAddress;
+import edu.cscc.securityexercises.models.UserProfile;
+import edu.cscc.securityexercises.repositories.UserAddressesRepository;
+import edu.cscc.securityexercises.repositories.UserProfilesRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

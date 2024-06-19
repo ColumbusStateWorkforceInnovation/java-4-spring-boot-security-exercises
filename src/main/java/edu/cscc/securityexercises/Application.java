@@ -1,4 +1,4 @@
-package edu.cscc.jpaexercise.jpaexercise;
+package edu.cscc.securityexercises;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
