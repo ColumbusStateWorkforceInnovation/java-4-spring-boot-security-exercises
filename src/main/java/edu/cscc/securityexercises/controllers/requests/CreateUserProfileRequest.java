@@ -9,5 +9,6 @@ public record CreateUserProfileRequest(
         @NotEmpty String firstName,
         @NotEmpty String lastName,
         @NotEmpty @Email String email,
+        @NotEmpty String password,
         List<UserAddressData> userAddresses
 ) { }

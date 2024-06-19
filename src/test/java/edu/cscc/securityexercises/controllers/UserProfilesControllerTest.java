@@ -1,6 +1,5 @@
 package edu.cscc.securityexercises.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cscc.securityexercises.controllers.requests.CreateUserProfileRequest;
 import edu.cscc.securityexercises.controllers.requests.UserAddressData;
@@ -16,15 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -54,7 +50,13 @@ class UserProfilesControllerTest {
                 new UserAddressData("123 Main St", "Columbus", "OH", "43215"),
                 new UserAddressData("456 Elm St", "Columbus", "OH", "43215"),
                 new UserAddressData("789 Oak St", "Columbus", "OH", "43215"));
-        CreateUserProfileRequest createUserProfileRequest = new CreateUserProfileRequest("Jim", "Kirkbride", "jkirkbride@cscc.edu", userAddresses);
+        CreateUserProfileRequest createUserProfileRequest = new CreateUserProfileRequest(
+                "Jim",
+                "Kirkbride",
+                "jkirkbride@cscc.edu",
+                "password",
+                userAddresses
+        );
         mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(createUserProfileRequest)))
@@ -63,8 +65,7 @@ class UserProfilesControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(createUserProfileRequest.lastName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(createUserProfileRequest.email()));
 
-        Optional<UserProfile> userProfile = userProfilesRepository.findByEmail(createUserProfileRequest.email());
-        UserProfile foundUserProfile = userProfile.get();
+        UserProfile foundUserProfile = userProfilesRepository.findByEmail(createUserProfileRequest.email());
         assertEquals(foundUserProfile.getFirstName(), createUserProfileRequest.firstName());
         assertEquals(foundUserProfile.getLastName(), createUserProfileRequest.lastName());
         assertEquals(foundUserProfile.getEmail(), createUserProfileRequest.email());

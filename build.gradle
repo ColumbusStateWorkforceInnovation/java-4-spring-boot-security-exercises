@@ -18,10 +18,18 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'org.postgresql:postgresql'
 	implementation("jakarta.inject:jakarta.inject-api:2.0.1")
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// Add security dependencies
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-core:6.3.0'
+
+	runtimeOnly 'org.postgresql:postgresql'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Add security test dependencies
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	testImplementation 'com.h2database:h2'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
 }

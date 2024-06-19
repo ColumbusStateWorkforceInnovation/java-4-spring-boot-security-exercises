@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,10 +45,20 @@ class UserProfileAddressesControllerTest {
     public void setUp() {
         userAddressesRepository.deleteAll();
         userProfilesRepository.deleteAll();
+
+        userProfilesRepository.save(
+                new UserProfile(
+                        "Your",
+                        "Name",
+                        "your.name@gmail.com",
+                        "password"
+                )
+        );
     }
 
     @Test
     @DisplayName("It returns a 404 when the user address is not found")
+    @WithMockUser(username = "your.name@gmail.com")
     public void itReturnsA404WhenTheUserAddressIsNotFound() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user-addresses/1/user"))
                 .andExpect(status().isNotFound());
@@ -55,8 +66,16 @@ class UserProfileAddressesControllerTest {
 
     @Test
     @DisplayName("It can create a user address")
+    @WithMockUser(username = "your.name@gmail.com")
     public void itCanCreateAUserAddress() throws Exception {
-        UserProfile userProfile = userProfilesRepository.save(new UserProfile("Your", "Name", "your.name@gmail.com"));
+        UserProfile userProfile = userProfilesRepository.save(
+                new UserProfile(
+                        "Your",
+                        "Name",
+                        "your.name@gmail.com",
+                        "password"
+                )
+        );
         CreateUserAddressRequest createUserAddressRequest =
                 new CreateUserAddressRequest(userProfile.getId(), "123 Main St", "Columbus", "OH", "43215");
 
@@ -74,6 +93,7 @@ class UserProfileAddressesControllerTest {
 
     @Test
     @DisplayName("It returns a 404 when the user is not found")
+    @WithMockUser(username = "your.name@gmail.com")
     public void itReturnsA404WhenTheUserIsNotFound() throws Exception {
         CreateUserAddressRequest createUserAddressRequest =
                 new CreateUserAddressRequest(999, "123 Main St", "Columbus", "OH", "43215");
@@ -86,6 +106,7 @@ class UserProfileAddressesControllerTest {
 
     @Test
     @DisplayName("It returns a 400 when the user address request is invalid")
+    @WithMockUser(username = "your.name@gmail.com")
     public void itReturnsA400WhenTheUserAddressRequestIsInvalid() throws Exception {
         CreateUserAddressRequest createUserAddressRequest =
                 new CreateUserAddressRequest(null, "", null, "Ohio", "43");
