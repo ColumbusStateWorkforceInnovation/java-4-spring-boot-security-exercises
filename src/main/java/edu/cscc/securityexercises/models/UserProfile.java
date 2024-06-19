@@ -1,5 +1,6 @@
 package edu.cscc.securityexercises.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -78,6 +79,7 @@ public class UserProfile {
         this.email = email;
     }
 
+    @JsonIgnore
     public List<UserAddress> getUserAddresses() {
         return userAddresses;
     }
