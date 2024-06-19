@@ -1,5 +1,7 @@
 package edu.cscc.jpaexercise.jpaexercise.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -22,13 +24,21 @@ public class UserAddress {
         fetch = FetchType.EAGER,
         optional = false
     )
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "user_profile_id")
+    @JsonIgnoreProperties("userAddresses")
+    private UserProfile userProfile;
 
     public UserAddress() {}
 
-    public UserAddress(User user, String street, String city, String state, String zip) {
-        this.user = user;
+    public UserAddress(UserProfile userProfile, String street, String city, String state, String zip) {
+        this.userProfile = userProfile;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+    }
+
+    public UserAddress(String street, String city, String state, String zip) {
         this.street = street;
         this.city = city;
         this.state = state;
@@ -75,12 +85,12 @@ public class UserAddress {
         this.zip = zip;
     }
 
-    public User getUser() {
-        return user;
+    public UserProfile getUser() {
+        return userProfile;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     @Override

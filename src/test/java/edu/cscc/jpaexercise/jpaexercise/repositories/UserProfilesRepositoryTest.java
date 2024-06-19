@@ -1,6 +1,6 @@
 package edu.cscc.jpaexercise.jpaexercise.repositories;
 
-import edu.cscc.jpaexercise.jpaexercise.models.User;
+import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,24 +16,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class UsersRepositoryTest {
+class UserProfilesRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserProfilesRepository userProfilesRepository;
 
     @Test
     @DisplayName("it can retrieve a user")
     public void itCanRetrieveAUser() {
-        User user = new User("Jim", "kirkbride");
-        user = entityManager.persist(user);
+        UserProfile userProfile = new UserProfile("Jim", "kirkbride");
+        userProfile = entityManager.persist(userProfile);
 
-        Optional<User> maybeUser = usersRepository.findById(user.getId());
+        Optional<UserProfile> maybeUser = userProfilesRepository.findById(userProfile.getId());
         assertTrue(maybeUser.isPresent());
-        User foundUser = maybeUser.get();
-        assertEquals(user.getFirstName(), foundUser.getFirstName());
-        assertEquals(user.getLastName(), foundUser.getLastName());
+        UserProfile foundUserProfile = maybeUser.get();
+        assertEquals(userProfile.getFirstName(), foundUserProfile.getFirstName());
+        assertEquals(userProfile.getLastName(), foundUserProfile.getLastName());
     }
 }

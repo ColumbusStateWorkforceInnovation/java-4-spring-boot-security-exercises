@@ -2,37 +2,45 @@ package edu.cscc.jpaexercise.jpaexercise.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "users")
-public class User {
+@Entity(name = "user_profiles")
+public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotEmpty
     private String firstName;
+
+    @NotEmpty
     private String lastName;
+
+    @NotEmpty
+    @Email
     private String email;
 
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "userProfile",
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties("userProfile")
     private List<UserAddress> userAddresses;
 
-    public User() {}
+    public UserProfile() {}
 
-    public User(String firstName, String lastName) {
+    public UserProfile(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public User(String firstName, String lastName, String email) {
+    public UserProfile(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -82,8 +90,8 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
+        UserProfile userProfile = (UserProfile) o;
+        return Objects.equals(id, userProfile.id) && Objects.equals(firstName, userProfile.firstName) && Objects.equals(lastName, userProfile.lastName) && Objects.equals(email, userProfile.email);
     }
 
     @Override
@@ -93,7 +101,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserProfile{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

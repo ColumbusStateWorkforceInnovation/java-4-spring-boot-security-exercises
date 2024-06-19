@@ -2,10 +2,10 @@ package edu.cscc.jpaexercise.jpaexercise.controllers;
 
 import edu.cscc.jpaexercise.jpaexercise.controllers.requests.CreateUserAddressRequest;
 import edu.cscc.jpaexercise.jpaexercise.exceptions.ResourceNotFoundException;
-import edu.cscc.jpaexercise.jpaexercise.models.User;
+import edu.cscc.jpaexercise.jpaexercise.models.UserProfile;
 import edu.cscc.jpaexercise.jpaexercise.models.UserAddress;
 import edu.cscc.jpaexercise.jpaexercise.repositories.UserAddressesRepository;
-import edu.cscc.jpaexercise.jpaexercise.repositories.UsersRepository;
+import edu.cscc.jpaexercise.jpaexercise.repositories.UserProfilesRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +21,11 @@ public class UserAddressesController {
     private UserAddressesRepository userAddressesRepository;
 
     @Autowired
-    private UsersRepository usersRepository;
-
-    @GetMapping("/{id}/user")
-    public ResponseEntity<?> getUser(@PathVariable Integer id) {
-        Optional<UserAddress> maybeUserAddress = userAddressesRepository.findById(id);
-        if (maybeUserAddress.isEmpty()) {
-            throw new ResourceNotFoundException("User address not found");
-        }
-
-        UserAddress userAddress = maybeUserAddress.get();
-        User user = usersRepository.findByUserAddresses(userAddress);
-
-        return ResponseEntity.ok(user);
-    }
+    private UserProfilesRepository userProfilesRepository;
 
     @PostMapping()
     public ResponseEntity<?> create(@Valid @RequestBody CreateUserAddressRequest createUserAddressRequest) {
-        Optional<User> user = usersRepository.findById(createUserAddressRequest.userId());
+        Optional<UserProfile> user = userProfilesRepository.findById(createUserAddressRequest.userId());
         if (user.isEmpty()) {
             throw new ResourceNotFoundException("User not found");
         }
