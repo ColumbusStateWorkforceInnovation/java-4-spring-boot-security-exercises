@@ -21,6 +21,16 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation("jakarta.inject:jakarta.inject-api:2.0.1")
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Security dependencies for jwt and oauth2
+	implementation 'org.springframework.security:spring-security-core'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+	// Test dependencies jwt and oauth2
+	testImplementation 'org.springframework.security:spring-security-test'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.h2database:h2'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
