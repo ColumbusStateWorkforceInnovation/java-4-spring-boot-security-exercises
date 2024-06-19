@@ -79,12 +79,13 @@ class UserAddressesControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/user-addresses")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(createUserAddressRequest)))
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.street").value(createUserAddressRequest.street()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city").value(createUserAddressRequest.city()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.state").value(createUserAddressRequest.state()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.zip").value(createUserAddressRequest.zip()))
-                .andExpect(status().isOk());
+                ;
     }
 
     @Test
