@@ -1,9 +1,37 @@
 version: '3.8'
 
 services:
+  auth-server:
+    image: quay.io/keycloak/keycloak:24.0.4
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_SCHEMA: public
+      KC_DB_URL: jdbc:postgresql://auth-server-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+    ports:
+      - 9999:8080
+    command: start-dev
+    depends_on:
+      - auth-server-db
+
+  auth-server-db:
+    image: postgres:16.2
+    container_name: jwt-auth-server-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./keycloak_data:/var/lib/postgresql/data
+
   postgres:
     image: postgres:16.2
-    container_name: basic-security-exercise-db
+    container_name: jwt-security-exercise-db
     environment:
       POSTGRES_DB: java-4-db
       POSTGRES_USER: root
